@@ -1,4 +1,5 @@
 "use client";
+
 import { useForecast } from "../hooks/useWeather";
 import ProviderReactQuery from "../providers/queryClinet";
 import Image from "next/image";
@@ -30,13 +31,13 @@ const Forecast: React.FC<{ lat: number; lon: number; unit: string }> = ({
     <ProviderReactQuery>
       <div className="grid grid-cols-2 gap-4">
 
-        {data?.map((day, index) => {
+        {data?.map((day:{weather:{icon:string,},datetime:string, temp:number}, ) => {
           const temp = unit === "metric" ? day.temp : (day.temp * 9) / 5 + 32; // تبدیل دما به فارنهایت
           const unitLabel = unit === "metric" ? "°C" : "°F";
           const src = `https://www.weatherbit.io/static/img/icons/${day.weather.icon}.png`;
 
           return (
-            <div key={index} className="p-4 border rounded">
+            <div key={day.datetime} className="p-4 border rounded">
               <p>{day.datetime}</p>
               <p>
                 {temp} {unitLabel}
